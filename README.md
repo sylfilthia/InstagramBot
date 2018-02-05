@@ -1,6 +1,6 @@
 # InstagramBot
 This is an instagram bot i made in Java using Selenium.
-Instagram change his structure a lot, so if the bot doesn't work, you may modify the xpath in some places... don't worry, it's pretty easy... i'll comment the place that you have to modify in the source code.
+Instagram sometimes change his structure, so if it doesn't work, you'll have to modify the xpath in some places... don't worry, it's pretty easy... i'll comment the place that you have to modify in the source code.
 
 Remember that you need [Mozilla Firefox](https://www.mozilla.org/es-ES/) installed and [Geckodriver](https://github.com/mozilla/geckodriver/releases)
  so the bot can manipulate the browser.
