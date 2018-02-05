@@ -13,6 +13,8 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
 
 public class Follow_Launcher extends JFrame {
 
@@ -42,7 +44,7 @@ public class Follow_Launcher extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new TitledBorder(null, "Load your profiles here", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(2, 0, 0, 0));
 		

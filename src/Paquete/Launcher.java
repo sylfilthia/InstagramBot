@@ -29,6 +29,12 @@ import java.awt.event.MouseEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.Toolkit;
+import javax.swing.border.TitledBorder;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.awt.Window.Type;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class Launcher extends JFrame {
 
@@ -40,6 +46,7 @@ public class Launcher extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -56,6 +63,8 @@ public class Launcher extends JFrame {
 	 * Create the frame.
 	 */
 	public Launcher() {
+		setAlwaysOnTop(true);
+		setResizable(false);
 		setTitle("ArgieBOT");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 313, 342);
@@ -69,6 +78,7 @@ public class Launcher extends JFrame {
 		panel.setLayout(new GridLayout(2, 1, 0, 5));
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Information", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(2, 2, 0, 0));
 		
@@ -76,9 +86,9 @@ public class Launcher extends JFrame {
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		JLabel label = new JLabel("Username");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(label);
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_2.add(lblEmail);
 		
 		userField = new JTextField();
 		userField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,27 +123,35 @@ public class Launcher extends JFrame {
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(2, 0, 0, 0));
 		
+		JPanel panel_5 = new JPanel();
+		panel_3.add(panel_5);
+		panel_5.setLayout(new GridLayout(1, 0, 0, 0));
 		JButton Boton = new JButton("START");
+		panel_5.add(Boton);
+		
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
+		panel_6.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JTextArea txtrArgiebotMadeBy = new JTextArea();
+		txtrArgiebotMadeBy.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		txtrArgiebotMadeBy.setEditable(false);
+		txtrArgiebotMadeBy.setText("******************ARGIEBOT************************\r\nCompiled: 02/11/2017\r\nVersion: v1\r\n**********************************************************");
+		panel_6.add(txtrArgiebotMadeBy);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, panel, panel_1, panel_2, lblEmail, userField, panel_4, label_1, passwordField, list, panel_3, panel_5, Boton, panel_6, txtrArgiebotMadeBy}));
 		Boton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int Opcion = list.getSelectedIndex() + 1;				
 				String user = userField.getText();
 				String pass = passwordField.getText();
 				main.setter(Opcion,user,pass);
+				
 				if(Opcion > 1)				
 					main.main(null);
-				else
+				else if(Opcion == 1)
 					Follow_Launcher.main(null);
 			}
 		});
-		panel_3.add(Boton);
-		JPanel panel_5 = new JPanel();
-		panel_3.add(panel_5);
-		
-		JTextArea txtrQwer = new JTextArea();
-		txtrQwer.setEditable(false);
-		txtrQwer.setText("ArgieBOT made by Cospel\r\n\r\nTelegram: @Cospel1");
-		panel_5.add(txtrQwer);
 	}
 
 }

@@ -43,14 +43,11 @@ public class main {
 	}
 	
 	public static void main(String[] args) {
-		
 		for(int i = 0; i < perfiles.size(); i++)
 			System.out.println(perfiles.get(i));
 		
 		Path currentRelativePath = Paths.get("");
 		String path = currentRelativePath.toAbsolutePath().toString();
-		Scanner Opcion = new Scanner(System.in);
-		Scanner Datos = new Scanner(System.in);
 		System.setProperty("webdriver.gecko.driver", path + "\\geckodriver.exe");		
 		System.out.print("Let's put our hands to work.");		
 		Bot argie = new Bot(Username,Password);

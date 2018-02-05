@@ -30,8 +30,10 @@ public class Bot {
 	WebDriver driver;
 	String usuario;
 	String password;
-	String[] first_comment  = { "Che,", "wow...", "Buenisimo che!", "Holaa,", "Ay","Hey"};
-	String[] middle_comment = { "Muy buena foto!", "te pasaste, quedo genial", "segui asi.", "me paso por tu foto"};
+	
+	//COMMENTS☻
+	String[] first_comment  = { "Che,", "wow...", "Buenisimo che!", "Holaa,", "Wow","Hey","Eu","ey","eyy","Euu","eyy"};
+	String[] middle_comment = { "Muy buena foto!", "genial la foto, te dejo mi like.. Buena foto", "LIKE!!", "buen contenido!! pasate por mi perfil..","terrible foto, likee!","buena foto.","copada foto.. pasate por mi perfil"};
 	String[] emoji_1        = { "😃", "😎", "👯", "😉", "😳", "😜", "😙", "😘", "😉", "🙊" };
 	String[] emoji_2        = { "🐷", "👌", "💫", "😂", "😍", "🌌", "💫" ,"👈", "🐵", "🙈", "🙉" };
 	
@@ -61,21 +63,15 @@ public class Bot {
 		return driver.findElements(By.xpath(element)).size() > 0;
 	}
 	
-	public void Login(){
-		System.out.println("I'm gonna log in instagram with your info (that was previously sended to my DB awmhwahwahaw okno, take it easy.");
-		this.driver.get("https://www.instagram.com/accounts/login/");
-		waitElement("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[1]/div/input",20);
-		this.driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[1]/div/input")).sendKeys(usuario);
-		waitElement("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[2]/div/input",20);
-		this.driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[2]/div/input")).sendKeys(password);
-		this.driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[2]/div/input")).sendKeys(Keys.RETURN);
-		//SELECT FORM
-		//SEND USER INFO
-		//SELECT FORM
-		//SEND PASS INFO
-		//CLICK 'ENTER'
-		//D0N3
-		System.out.println("Loged in");
+	public void Login(){		
+		driver.get("https://www.instagram.com/accounts/login/");
+		waitElement("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[1]/div/div[1]/input",20); 	//MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE
+		waitElement("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[2]/div/div[1]/input",20);	//MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE
+		driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[1]/div/div[1]/input")).sendKeys(usuario);	//MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE
+		driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[2]/div/div[1]/input")).sendKeys(password);	//MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE
+		driver.findElement(By.xpath("//*[@id='react-root']/section/main/div/article/div/div[1]/div/form/div[1]/div/div[1]/input")).sendKeys(Keys.RETURN);	//MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE
+		Rest(3,true);		
+		driver.get("https://www.instagram.com/" + usuario);
 	}
 	
 	public void Like(){
@@ -83,7 +79,7 @@ public class Bot {
 		Rest(3,false);
 		int count = 0,row = 0, empty = 0;			
 			for(int i = 1; i < 500; i++){
-				List<WebElement> Likes = driver.findElements(By.xpath("//span[text()='Like']"));	
+				List<WebElement> Likes = driver.findElements(By.xpath("//span[text()='Me gusta']"));	//MODIFY 'Me Gusta' to Like or however it is in your language :)
 				if(Likes.size() > 0){
 					System.out.println("Dude i just found like " + Likes.size() + " photos we haven't liked yet");
 						empty = 0;
@@ -127,8 +123,9 @@ public class Bot {
 		boolean commented = false;
 			for(int i = 1; i < 500; i++){
 				
-				List<WebElement> Comments = driver.findElements(By.xpath("//*[@id='mainFeed']/div/div/div[1]/div/article"));	
+				List<WebElement> Comments = driver.findElements(By.xpath("//*[@id='react-root']/section/main/section/div[1]/div[1]/div/article"));	 //MODIFY XPATH HERE... YOU HAVE TO SELECT A NOTICE AND PUT IT HERE.
 				avaible = Comments.size();
+				System.out.println("Seleccione " + Comments.size() + " articulos");
 				if(Comments.size() > 0){
 					for(WebElement w : Comments) {
 						commented = false;
@@ -148,6 +145,7 @@ public class Bot {
 						}catch(Exception e){
 							
 						}
+						System.out.println(avaible + " fueron disponibles para comentar");
 						try{
 							if(!commented){
 								WebElement textarea = w.findElement(By.xpath(".//textarea"));
@@ -163,7 +161,7 @@ public class Bot {
 								textarea.sendKeys(Keys.ENTER);
 								count++;
 								row++;	
-								Rest(15,true);								
+								Rest(20,true);								
 								
 							}
 						} catch(Exception e){
@@ -173,7 +171,8 @@ public class Bot {
 							
 						}					
 				}
-				if(avaible == 0){
+				
+				if(avaible == 0 && i > 1){
 					System.out.println("hey i found like " + Comments.size() + " photos but we already commented'em all.");
 					((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
 				}	
@@ -190,83 +189,39 @@ public class Bot {
 	
 	public void Follow(ArrayList profiles){
 		for(int i = 0; i < profiles.size(); i++){
-			int valor = 0, tiempo = 0, porcentaje = 0, contador = 0;			
+			int valor = 100, tiempo = 0, porcentaje = 0, contador = 0;			
 			boolean descanso = false,error = false;
 			
-			String link = "https://www.instagram.com/" + profiles.get(i);
-			//System.out.println(link);
-			driver.get(link);
-			
-			WebElement element = driver.findElement(By.xpath("//*[@id='react-root']/section/main/article/header/div[2]/ul/li[2]/a/span"));
-			String numero = element.getText();					
-			if(numero.indexOf('k') != -1){
-				if(numero.indexOf('.') != -1){
-					numero = numero.split("\\.", 2)[0];
-				}else if(numero.indexOf(',') != -1){
-					numero = numero.split("\\,", 2)[0];
-				}
-				numero = numero.replaceAll("k", "");
-				valor = Integer.parseInt(numero);
-				valor = valor*1000;	
-				System.out.println("K");
-			}
-			else if(numero.indexOf('m') != -1){
-				if(numero.indexOf('.') != -1){
-					numero = numero.split("\\.", 2)[0];
-				}else if(numero.indexOf(',') != -1){
-					numero = numero.split("\\,", 2)[0];
-				}
-				numero = numero.replaceAll("m", "");
-				valor = Integer.parseInt(numero);
-				valor = valor*1000000;
-				System.out.println("m");
-			}
-			else{
-				if(numero.indexOf('.') != -1){
-					numero = numero.split("\\.", 2)[0];
-					valor = Integer.parseInt(numero);
-					valor = valor*1000;
-				}else if(numero.indexOf(',') != -1){
-					numero = numero.split("\\,", 2)[0];
-					valor = Integer.parseInt(numero);
-					valor = valor*1000;
-				}else{
-					valor = Integer.parseInt(numero);
-				}
-				
-				System.out.println("na");
-			}
-			
-			if(valor > 100){
-				valor = 100;
-			}
+			String link = "https://www.instagram.com/" + profiles.get(i);			
+			driver.get(link);			
 			
 				System.out.println("Followers: "+valor);
-				waitElement("//*[@id='react-root']/section/main/article/header/div[2]/ul/li[2]/a",5);
-				driver.findElement(By.xpath("//*[@id='react-root']/section/main/article/header/div[2]/ul/li[2]/a")).click();
+				waitElement(".//*[@id='react-root']/section/main/article/header/section/ul/li[2]/a",5);
+				driver.findElement(By.xpath(".//*[@id='react-root']/section/main/article/header/section/ul/li[2]/a")).click();
 			
 			
-			for(int y = 1; y < valor; y++){
+			for(int y = 1; y < 100; y++){
 				descanso = false;
 				if(contador == 100){
-					Rest(1200,true);
+					Rest(600,true);
 					contador = 0;
 				}else{
 					contador++;
 				}
-				porcentaje = Azar(0,105);
+				
+				porcentaje = Azar(1,105);
 				
 				if(porcentaje >= 0 && porcentaje <= 50){
-					tiempo = 30;
+					tiempo = 5;
 				}
 				else if(porcentaje >= 50 && porcentaje <= 70){
-					tiempo = 40;
+					tiempo = 10;
 				}
 				else if(porcentaje >= 70 && porcentaje <= 90){
-					tiempo = 60;
+					tiempo = 15;
 				}
 				else if(porcentaje >= 90 && porcentaje <= 100){
-					tiempo = 120;
+					tiempo = 20;
 				}
 				else if(porcentaje >= 102 && porcentaje <= 105){
 					descanso = true;
@@ -276,17 +231,20 @@ public class Bot {
 				System.out.println("Loteria: "+porcentaje+"/"+105);
 				System.out.println("¿Descanso?: "+descanso);
 				System.out.println("Progreso: "+valor+"/"+y);
-				try{					
-				waitElement("html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button",20);
-				if(Verify("html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button")){
+				
+				try{		
+					
+				waitElement("/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li[" + y + "]/div/div[2]/span/button",20); //HERE IS WHERE YOU HAVE TO MODIFY FOLLOW BUTTON... PUT ONE AS EXAMPLE.
+				if(Verify("/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li[" + y + "]/div/div[2]/span/button")){     // HERE
 					try{
 					System.out.println(y);
-					String Elemento = "html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button";
+					String Elemento = "/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li[" + y + "]/div/div[2]/span/button"; //HERE
 					waitElement(Elemento,20);
-					if(Verify("html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button")){
+					if(Verify("/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li[" + y + "]/div/div[2]/span/button")){ //HERE
+							   
 						driver.findElement(By.xpath(Elemento)).click();
 					}
-					if(Verify("html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button")){
+					if(Verify("/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li[" + y + "]/div/div[2]/span/button")){ //AAAAAAND.... HERE.
 						driver.findElement(By.xpath(Elemento)).sendKeys(Keys.TAB);
 					}								
 						
@@ -319,8 +277,8 @@ public class Bot {
 				contador = 0;
 			}
 			driver.get("https://www.instagram.com/"+ usuario + "/following/");
-			waitElement("//*[@id='react-root']/section/main/article/header/div[2]/ul/li[3]/a",20);
-			driver.findElement(By.xpath("//*[@id='react-root']/section/main/article/header/div[2]/ul/li[3]/a")).click();
+			waitElement(".//*[@id='react-root']/section/main/article/header/section/ul/li[3]/a",20);
+			driver.findElement(By.xpath(".//*[@id='react-root']/section/main/article/header/section/ul/li[3]/a")).click();
 			Rest(1,false);
 			for(int y = 1; y < 15; y++){
 				descanso = false;
@@ -346,8 +304,8 @@ public class Bot {
 				System.out.println("And this is the faggot number " + unfollowed + "...  [" + porcentaje + "/105]");
 				if(!descanso){
 					try{
-						String Elemento = "html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button";
-						waitElement("html/body/div[4]/div/div/div[2]/div/div[2]/ul/li["+y+"]/div/div[2]/span/button",20);
+						String Elemento = "/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li["+y+"]/div/div[2]/span/button"; //MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE 	[UNFOLLOW BUTTON]
+						waitElement("/html/body/div[4]/div/div[2]/div/div[2]/ul/div/li["+y+"]/div/div[2]/span/button",20); //MODIFY XPATH HERE IN CASE INSTAGRAM CHANGE HIS STRUCTURE		[UNFOLLOW BUTTON]
 						driver.findElement(By.xpath(Elemento)).click();
 						unfollowed++;
 						Rest(tiempo,true);	
