@@ -34,4 +34,4 @@ Like everything in your timeline.
 
 
 # Download
-Compiled versions: [MEGA](https://mega.nz/#!XkhjzJCC!gicVWyANGk4qMs6GQilTLmnZJgAF900EsmDusUMa2kk) | [MediaFire](http://www.mediafire.com/file/bfd69fs524y7kvu/ArgieBOT.zip)
+Compiled versions: [MEGA](https://mega.nz/#!n1IVlLKT!Fue5T2jBcUlEdD-dKMkKfudB6-rBVnbFjjJaRoKPeKQ) | [MediaFire](http://www.mediafire.com/file/nc5b7kfhj31gkll/instagrambot.zip)
