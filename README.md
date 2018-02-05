@@ -9,7 +9,9 @@ This option will open another little window where you gotta insert the id of tho
 
 # Unfollow
 
-This will unfollow everyone you're following.
+This will unfollow everyone you're following... it goes quick in the gif because it's a demostration, i recommend you to do it slow, or instagram will block you.
+
+![alt_text](https://k50.kn3.net/5/9/8/C/3/5/DEE.gif)
 
 # Comment
 
@@ -22,3 +24,5 @@ Errors? Sometimes it comment twice.
 # Like
 
 Like everything in your timeline.
+
+![alt_text](https://k50.kn3.net/B/5/0/8/B/B/AB9.gif)
